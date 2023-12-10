@@ -5,7 +5,7 @@ import { RGBELoader } from "three/examples/jsm/loaders/RGBELoader"
 
 const canvas = document.querySelector(".canvas")
 const scene = new THREE.Scene();
-const camera = new THREE.PerspectiveCamera(50, canvas.offsetWidth / canvas.offsetHeight, 0.1, 100);
+const camera = new THREE.PerspectiveCamera(60, canvas.offsetWidth / canvas.offsetHeight, 0.1, 100);
 camera.position.z = 5
 
 
@@ -51,7 +51,7 @@ const cube = new THREE.Mesh(geometry, material);
 //   texture.mapping = THREE.EquirectangularReflectionMapping
 //   // scene.background = texture
 // })
-loader.load('drone2.gltf', function (gltf) {
+loader.load('drone.glb', function (gltf) {
 
   droneModel = gltf.scene
 
@@ -128,7 +128,7 @@ scene.add(directionLight)
 // });
 
 //creating a plane floor
-const floor = new THREE.BoxGeometry(3, 3, 0.1);
+const floor = new THREE.BoxGeometry(8, 8, 0.4);
 const floorMaterial = new THREE.MeshBasicMaterial({ color: "#e6ebff", side: THREE.DoubleSide });
 const plane = new THREE.Mesh(floor, floorMaterial);
 plane.receiveShadow = true
