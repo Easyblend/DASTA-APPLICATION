@@ -8,6 +8,9 @@ const scene = new THREE.Scene();
 const camera = new THREE.PerspectiveCamera(60, canvas.offsetWidth / canvas.offsetHeight, 0.1, 100);
 camera.position.z = 5
 
+let z_coord = document.querySelector(".z-coord")
+let y_coord = document.querySelector(".y-coord")
+let x_coord = document.querySelector(".x-coord")
 
 //Visual inputs values for the ranges
 const XY_range = document.getElementById("xy")
@@ -57,6 +60,8 @@ loader.load('drone.glb', function (gltf) {
 
   droneModel.position.y = 0.07
   droneModel.castShadow = true
+
+  y_coord.innerHTML = `<h4>X: ${droneModel.position.y}</h4>`
 
   scene.add(droneModel);
 
@@ -134,7 +139,7 @@ const plane = new THREE.Mesh(floor, floorMaterial);
 plane.receiveShadow = true
 plane.rotation.x = Math.PI / 2;
 plane.position.y = -0.22
-scene.add(plane);
+// scene.add(plane);
 
 control.enableDamping = true
 
@@ -150,7 +155,7 @@ let hoverDirection = 0.01; // 1 for up, -1 for down
 const hoverAmplitude = 0.01; // Adjust the amplitude for intensity
 const hoverSpeed = 0.03; // Adjust the speed for frequency
 
-const ctx = document.getElementById('myChart');
+// const ctx = document.getElementById('myChart');
 
 var X_axisData = {
   label: "X axis",
@@ -194,11 +199,11 @@ var chartOptions = {
 
 
 
-var lineChart = new Chart(ctx, {
-  type: 'line',
-  data: speedData,
-  options: chartOptions
-});
+// var lineChart = new Chart(ctx, {
+//   type: 'line',
+//   data: speedData,
+//   options: chartOptions
+// });
 
 let j = 0.01
 
@@ -220,7 +225,10 @@ function animate() {
       j = j + 0.01
       speedData.labels.push(`${j.toFixed(2)}s`)
 
-      lineChart.update();
+
+
+      y_coord.innerHTML = `<h4>Y: ${Number(droneModel?.position?.y).toFixed(2)}</h4>`
+      // lineChart.update();
       Y_range.value += 1;
 
       // Trigger the input event
@@ -231,13 +239,14 @@ function animate() {
       if (droneModel.position.y > 0.07) {
         droneModel.position.y -= 0.03
         Y_axisData.data.push(droneModel.position.y)
+        y_coord.innerHTML = `<h4>Y: ${Number(droneModel?.position?.y).toFixed(2)}</h4>`
         j = j + 0.01
         speedData.labels.push(`${j.toFixed(2)}s`)
         Y_range.value -= 2;
         // Trigger the input event
         const inputEvent = new Event('input', { bubbles: true });
         Y_range.dispatchEvent(inputEvent);
-        lineChart.update();
+        // lineChart.update();
 
 
       }
@@ -251,6 +260,12 @@ function animate() {
     }
 
   }
+
+  const size = 20;
+  const divisions = 20;
+
+  const gridHelper = new THREE.GridHelper(size, divisions);
+  scene.add(gridHelper);
 
   control.update()
   // if (droneModel) {
