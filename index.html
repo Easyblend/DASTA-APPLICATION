@@ -10,114 +10,223 @@
 </head>
 
 <body>
-  <canvas class="canvas">
-  </canvas>
-  <div class="myChart">
-    <h4 class="x-coord text-primary">X: 0.00</h4>
-    <h4 class="y-coord text-warning">Y: 0.00</h4>
-    <h4 class="z-coord text-danger">Z: 0.00</h4>
+  <nav>
+    <a href="Telemetries.html">View Data</a>
+  </nav>
+  <div id="viewport">
+    <canvas class="canvas">
+    </canvas>
+    <!-- <div class="myChart">
+      <h4 class="x-coord text-primary">X: 0.00</h4>
+      <h4 class="y-coord text-warning">Y: 0.00</h4>
+      <h4 class="z-coord text-danger">Z: 0.00</h4>
 
-  </div>
-  <div class="controls rounded-3">
-
-    <div class="nav d-flex gap-3">
-
-      <p class="text-sm Planning" role="button">Planning</p>
-      <p class="text-lg flight-control" role="button">Flight Control</p>
-      <p class="text-sm settings" role="button">Settings</p>
     </div>
+    <div class="controls rounded-3">
 
-    <table class="table table-dark">
-      <thead>
-        <tr>
-          <th scope="col">#</th>
-          <th scope="col">First</th>
-          <th scope="col">Last</th>
-          <th scope="col">Handle</th>
-        </tr>
-      </thead>
-      <tbody>
-        <tr>
-          <th scope="row">1</th>
-          <td>Mark</td>
-          <td>Otto</td>
-          <td>@mdo</td>
-        </tr>
-        <tr>
-          <th scope="row">2</th>
-          <td>Jacob</td>
-          <td>Thornton</td>
-          <td>@fat</td>
-        </tr>
-        <tr>
-          <th scope="row">3</th>
-          <td>Larry the Bird</td>
-          <td>@twitter</td>
-          <td>@twitter</td>
-        </tr>
-      </tbody>
-    </table>
-
-
-    <!-- <div class="directional-buttons">
-      <button class="direction-button up">
-        <span class="visually-hidden">up</span>
-      </button>
-      <button class="direction-button left">
-        <span class="visually-hidden">left</span>
-      </button>
-      <button class="direction-button right">
-        <span class="visually-hidden">right</span>
-      </button>
-      <button class="direction-button down">
-        <span class="visually-hidden">down</span>
-      </button>
-    </div> -->
-
-    <hr>
-
-    <div class="data-record" style="margin: 5px 0px;">
-      <h1 style="margin-bottom: 5px;">Sentivity</h1>
-      <label for="xy">XY</label>
-      <input type="range" name="xy" id="xy" style="width:88%" value="0" disabled>
-      <br>
-      <label for="y">Y</label>
-      <input type="range" name="y" id="y" style="width:90%" value="0" disabled>
-      <br>
-      <label for="0">0</label>
-      <input type="range" name="0" id="0" style="width:90%" value="0" disabled>
-    </div>
-
-    <hr>
-    <div class="form-check form-switch ">
-      <input class="form-check-input" type="checkbox" id="data recording">
-      <label class="form-check-label" for="Data recording">Data recording</label>
-    </div>
-    <div class="form-check form-switch ">
-      <input class="form-check-input" type="checkbox" id="zone restriction">
-      <label class="form-check-label" for="Zone restriction">Zone restriction</label>
-    </div>
-    <div class="form-check form-switch ">
-      <input class="form-check-input" type="checkbox" id="position stabilization">
-      <label class="form-check-label" for="Position stabilization">Position stabilization</label>
-    </div>
-
-    <hr>
-    <div class="d-flex flex-column gap-3 px-2">
-      <button class="btn-success btn-lg btn" id="start">Start Takeoff</button>
-      <div>
-        <button class="btn-light btn" id="send path">Send path</button>
-        <button class="btn-light btn" id="start path">Start path</button>
+      <div class="nav d-flex gap-3 mx-auto justify-content-center">
+        <p class="text-sm planning" role="button">Planning</p>
+        <p class="text-lg flight-control" role="button">Flight Control</p>
+        <p class="text-sm settings" role="button">Settings</p>
       </div>
-      <button class="btn-danger btn" id="stop">Stop</button>
 
-    </div>
+      <br>
 
 
-    <br>
-    <h1 class="x-axis"></h1>
-    <h1 class="y-axis"></h1>
+      <div class="flight-page mx-auto">
+        <div class="directional-buttons">
+          <button class="direction-button up">
+            <span class="visually-hidden">up</span>
+          </button>
+          <button class="direction-button left">
+            <span class="visually-hidden">left</span>
+          </button>
+          <button class="direction-button right">
+            <span class="visually-hidden">right</span>
+          </button>
+          <button class="direction-button down">
+            <span class="visually-hidden">down</span>
+          </button>
+        </div>
+
+        <hr>
+
+        <div class="data-record">
+          <h4>Sentivity</h4>
+          <label for="xy">XY</label>
+          <input type="range" name="xy" id="xy" style="width:88%" value="0" disabled>
+          <br>
+          <label for="y">Y</label>
+          <input type="range" name="y" id="y" style="width:90%" value="0" disabled>
+          <br>
+          <label for="0">0</label>
+          <input type="range" name="0" id="0" style="width:90%" value="0" disabled>
+        </div>
+
+        <hr>
+        <div class="form-check form-switch ">
+          <input class="form-check-input" type="checkbox" id="data recording">
+          <label class="form-check-label" for="Data recording">Data recording</label>
+        </div>
+        <div class="form-check form-switch ">
+          <input class="form-check-input" type="checkbox" id="zone restriction">
+          <label class="form-check-label" for="Zone restriction">Zone restriction</label>
+        </div>
+        <div class="form-check form-switch ">
+          <input class="form-check-input" type="checkbox" id="position stabilization">
+          <label class="form-check-label" for="Position stabilization">Position stabilization</label>
+        </div>
+
+        <hr>
+        <div class="d-flex flex-column gap-3 px-2">
+          <button class="btn-success btn-lg btn" id="start">Start Takeoff</button>
+          <div class="d-flex gap-3 mx-auto">
+            <button class="btn-light btn" id="send path">Send path</button>
+            <button class="btn-light btn" id="start path">Start path</button>
+          </div>
+          <button class="btn-danger btn" id="stop">Stop</button>
+
+        </div>
+      </div>
+
+
+      <div class="settings-page">
+        <table class="table table-dark">
+          <thead>
+            <tr>
+              <th scope="col"></th>
+              <th scope="col">Kp</th>
+              <th scope="col">Ki</th>
+              <th scope="col">Kd</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <th scope="row">X</th>
+              <td><input type="text" class="w-50"></td>
+              <td><input type="text" class="w-50"></td>
+              <td><input type="text" class="w-50"></td>
+            </tr>
+            <tr>
+              <th scope="row">Y</th>
+              <td><input type="text" class="w-50"></td>
+              <td><input type="text" class="w-50"></td>
+              <td><input type="text" class="w-50"></td>
+            <tr>
+              <th scope="row">Z</th>
+              <td><input type="text" class="w-50"></td>
+              <td><input type="text" class="w-50"></td>
+              <td><input type="text" class="w-50"></td>
+            </tr>
+            <tr>
+              <th scope="row">Yaw</th>
+
+              <td><input type="text" class="w-100"></td>
+
+
+              <td><input type="text" class="w-100"></td>
+
+
+              <td><input type="text" class="w-100"></td>
+
+            </tr>
+            <tr>
+              <th scope="row">Pitch</th>
+
+              <td><input type="text" class="w-100"></td>
+
+              <td><input type="text" class="w-100"></td>
+
+
+              <td><input type="text" class="w-100"></td>
+
+            </tr>
+            <tr>
+              <th scope="row">Roll</th>
+
+              <td><input type="text" class="w-100"></td>
+
+              <td><input type="text" class="w-100"></td>
+
+              <td><input type="text" class="w-100"></td>
+
+            </tr>
+          </tbody>
+        </table>
+
+        <br>
+        <table class="table table-dark ">
+          <thead>
+            <tr>
+              <th scope="col">Sensor</th>
+              <th scope="col">Type</th>
+              <th scope="col">Axis</th>
+              <th scope="col">Error</th>
+            </tr>
+          </thead>
+          <tbody>
+
+
+            <br>
+            <tr>
+              <th scope="row">X</th>
+              <td><input type="text" class="w-50"></td>
+              <td><input type="text" class="w-50"></td>
+              <td><input type="text" class="w-50"></td>
+            </tr>
+            <tr>
+              <th scope="row">Y</th>
+              <td><input type="text" class="w-50"></td>
+              <td><input type="text" class="w-50"></td>
+              <td><input type="text" class="w-50"></td>
+            <tr>
+              <th scope="row">Z</th>
+              <td><input type="text" class="w-50"></td>
+              <td><input type="text" class="w-50"></td>
+              <td><input type="text" class="w-50"></td>
+            </tr>
+            <tr>
+              <th scope="row">Yaw</th>
+
+              <td><input type="text" class="w-100"></td>
+
+
+              <td><input type="text" class="w-100"></td>
+
+
+              <td><input type="text" class="w-100"></td>
+
+            </tr>
+            <tr>
+              <th scope="row">Pitch</th>
+
+              <td><input type="text" class="w-100"></td>
+
+              <td><input type="text" class="w-100"></td>
+
+
+              <td><input type="text" class="w-100"></td>
+
+            </tr>
+            <tr>
+              <th scope="row">Roll</th>
+
+              <td><input type="text" class="w-100"></td>
+
+              <td><input type="text" class="w-100"></td>
+
+              <td><input type="text" class="w-100"></td>
+
+            </tr>
+          </tbody>
+        </table>
+      </div>
+
+      <div class="planning-page"></div>
+
+    </div> -->
   </div>
+
   <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
   <script type="module" src="/main.js"></script>
 </body>

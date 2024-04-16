@@ -1,41 +1,64 @@
 import * as THREE from 'three';
 import { GLTFLoader } from 'three/addons/loaders/GLTFLoader.js';
 import { OrbitControls } from "three/examples/jsm/controls/OrbitControls"
-import { RGBELoader } from "three/examples/jsm/loaders/RGBELoader"
+
 
 const canvas = document.querySelector(".canvas")
 const scene = new THREE.Scene();
 const camera = new THREE.PerspectiveCamera(60, canvas.offsetWidth / canvas.offsetHeight, 0.1, 100);
 camera.position.z = 5
 
-let z_coord = document.querySelector(".z-coord")
-let y_coord = document.querySelector(".y-coord")
-let x_coord = document.querySelector(".x-coord")
 
-//Visual inputs values for the ranges
-const XY_range = document.getElementById("xy")
-const Y_range = document.getElementById("y")
-const range0 = document.getElementById("0")
+
+// const flight_pageBtn = document.querySelector(".flight-control")
+// const settings_pageBtn = document.querySelector(".settings")
+// const planningBtn = document.querySelector(".planning")
+
+// const flight_page = document.querySelector(".flight-page")
+// const settings_page = document.querySelector(".settings-page")
+// const planning = document.querySelector(".planning-page")
+
+// flight_pageBtn.addEventListener("click", (event) => {
+//   settings_page.style.display = "none"
+//   planning.style.display = "none"
+//   flight_page.style.display = "block"
+// })
+// settings_pageBtn.addEventListener("click", (event) => {
+//   settings_page.style.display = "block"
+//   planning.style.display = "none"
+//   flight_page.style.display = "none"
+// })
+// planningBtn.addEventListener("click", (event) => {
+//   settings_page.style.display = "none"
+//   planning.style.display = "block"
+//   flight_page.style.display = "none"
+// })
+
+// let z_coord = document.querySelector(".z-coord")
+// let y_coord = document.querySelector(".y-coord")
+// let x_coord = document.querySelector(".x-coord")
+
+// //Visual inputs values for the ranges
+// const XY_range = document.getElementById("xy")
+// const Y_range = document.getElementById("y")
+// const range0 = document.getElementById("0")
 
 
 //Getting the input values for the check boxes
-const data_rec = document.getElementById("data recording")
-const zone_res = document.getElementById("zone restriction")
-const position_stab = document.getElementById("position stabilization")
+// const data_rec = document.getElementById("data recording")
+// const zone_res = document.getElementById("zone restriction")
+// const position_stab = document.getElementById("position stabilization")
 
 
 //Getting Buttons from DOM
-const startBtn = document.getElementById("start")
-const stopBtn = document.getElementById("stop")
+// const startBtn = document.getElementById("start")
+// const stopBtn = document.getElementById("stop")
 
 
-// const xAxis = document.querySelector(".x-axis")
-// const yAxis = document.querySelector(".x-axis")
+// const btnLeft = document.querySelector(".left")
+// const btnRight = document.querySelector(".right")
 
-const btnLeft = document.querySelector(".left")
-const btnRight = document.querySelector(".right")
 
-const loader = new GLTFLoader();
 let droneModel
 
 
@@ -48,68 +71,45 @@ const geometry = new THREE.SphereGeometry(1, 64, 64);
 const material = new THREE.MeshStandardMaterial({ color: 0x00ff00 });
 const cube = new THREE.Mesh(geometry, material);
 
-// const hdri = new RGBELoader()
-// hdri.load("scen hdri.hdr", (texture) => {
-//   scene.environment = texture
-//   texture.mapping = THREE.EquirectangularReflectionMapping
-//   // scene.background = texture
-// })
-loader.load('drone.glb', function (gltf) {
+import { OBJLoader } from 'three/examples/jsm/loaders/OBJLoader.js';
 
-  droneModel = gltf.scene
+import { MTLLoader } from 'three/examples/jsm/loaders/MTLLoader.js';
 
-  droneModel.position.y = 0.07
-  droneModel.castShadow = true
+const objLoader = new OBJLoader();
+const mtlLoader = new MTLLoader();
 
-  y_coord.innerHTML = `<h4>X: ${droneModel.position.y}</h4>`
+mtlLoader.load(
+  'DASTA v1.mtl',
+  function (materials) {
+    materials.preload();
+    objLoader.setMaterials(materials);
 
-  scene.add(droneModel);
-
-}, undefined, function (error) {
-
-  console.error(error);
-
-});
-// scene.add(cube);
-
-
+    objLoader.load(
+      'DASTA v1.obj',
+      function (object) {
+        scene.add(object);
+        droneModel = object
+        droneModel.scale.set(0.01, 0.01, 0.01)
+        droneModel.rotateX(1.57 * 3)
+        // Optionally manipulate the loaded object
+      },
+      function (xhr) {
+        console.log((xhr.loaded / xhr.total * 100) + '% loaded');
+      },
+      function (error) {
+        console.error('Failed to load OBJ file:', error);
+      }
+    );
+  },
+  function (xhr) {
+    console.log((xhr.loaded / xhr.total * 100) + '% loaded');
+  },
+  function (error) {
+    console.error('Failed to load MTL file:', error);
+  }
+);
 
 const control = new OrbitControls(camera, canvas)
-
-
-//Create a material for the line 
-// const linematerial = new THREE.LineBasicMaterial({ color: 0x0000ff });
-
-// define the vertices of the line
-
-// const plight = new THREE.PointLight(0xfffff, 10, 8)
-
-// plight.position.set(0, 1, 0)
-
-// scene.add(plight)
-// plight.castShadow = true
-//create the line object
-// const line = new THREE.Line(geometry, material)
-
-
-// const donut = new THREE.RingGeometry(0.5, 2, 3)
-
-// const donutmaterial = new THREE.MeshBasicMaterial({ color: "#0066ff" })
-
-// const donutObject = new THREE.Mesh(donut, donutmaterial)
-
-// scene.add(donutObject)
-
-// line.rotateX(23)
-// scene.add(line, linematerial)
-
-
-// line.position.set(1, 0, 0)
-
-
-// const ambient = new THREE.AmbientLight(0x404040)
-
-// scene.add(ambient)
 
 const directionLight = new THREE.DirectionalLight(0xffffff, 3)
 directionLight.position.z = 5
@@ -117,20 +117,6 @@ directionLight.castShadow = true
 scene.add(directionLight)
 
 
-
-// btnLeft.addEventListener("click", function () {
-//   if (droneModel) {
-//     droneModel.position.x -= 0.067; // Adjust the value for the left movement
-//     xAxis.innerHTML = `X: ${droneModel.position.x}`
-//   }
-// });
-
-// btnRight.addEventListener("click", function () {
-//   if (droneModel) {
-//     droneModel.position.x += 0.028; // Adjust the value for the right movement
-//     xAxis.innerHTML = `X: ${droneModel.position.x}`
-//   }
-// });
 
 //creating a plane floor
 const floor = new THREE.BoxGeometry(8, 8, 0.4);
@@ -143,13 +129,13 @@ plane.position.y = -0.22
 
 control.enableDamping = true
 
-let isMoving;
-startBtn.addEventListener("click", () => {
-  isMoving = true; // Set the flag when the button is clicked
-});
-stopBtn.addEventListener("click", () => {
-  isMoving = false; // Set the flag when the button is clicked
-});
+// let isMoving;
+// startBtn.addEventListener("click", () => {
+//   isMoving = true; // Set the flag when the button is clicked
+// });
+// stopBtn.addEventListener("click", () => {
+//   isMoving = false; // Set the flag when the button is clicked
+// });
 
 let hoverDirection = 0.01; // 1 for up, -1 for down
 const hoverAmplitude = 0.01; // Adjust the amplitude for intensity
@@ -205,100 +191,86 @@ var chartOptions = {
 //   options: chartOptions
 // });
 
-let j = 0.01
+var orientation_x = 0
+var orientation_y = 0
+var orientation_z = 0
+let target_orientation_x = 0;
+let target_orientation_y = 0;
+let target_orientation_z = 0;
 
 function animate() {
 
   requestAnimationFrame(animate);
+
+  
+   orientation_x += (target_orientation_x - orientation_x) * 0.1;
+   orientation_y += (target_orientation_y - orientation_y) * 0.1;
+   orientation_z += (target_orientation_z - orientation_z) * 0.1;
   if (droneModel) {
-
-
-
-
-    if (isMoving && droneModel.position.y < 2) {
-      // Example: Simulate up-down hovering effect along the Y-axis using sine function
-
-
-      droneModel.position.y += 0.02
-
-      Y_axisData.data.push(droneModel.position.y)
-      j = j + 0.01
-      speedData.labels.push(`${j.toFixed(2)}s`)
-
-
-
-      y_coord.innerHTML = `<h4>Y: ${Number(droneModel?.position?.y).toFixed(2)}</h4>`
-      // lineChart.update();
-      Y_range.value += 1;
-
-      // Trigger the input event
-      const inputEvent = new Event('input', { bubbles: true });
-      Y_range.dispatchEvent(inputEvent);
-    }
-    else {
-      if (droneModel.position.y > 0.07) {
-        droneModel.position.y -= 0.03
-        Y_axisData.data.push(droneModel.position.y)
-        y_coord.innerHTML = `<h4>Y: ${Number(droneModel?.position?.y).toFixed(2)}</h4>`
-        j = j + 0.01
-        speedData.labels.push(`${j.toFixed(2)}s`)
-        Y_range.value -= 2;
-        // Trigger the input event
-        const inputEvent = new Event('input', { bubbles: true });
-        Y_range.dispatchEvent(inputEvent);
-        // lineChart.update();
-
-
-      }
-      // Change hover direction when reaching the amplitude limits
-      // droneModel.position.y +=
-      //   hoverDirection * hoverAmplitude * Math.sin(performance.now() * hoverSpeed / 10000);
-      // if (droneModel.position.y > hoverAmplitude || droneModel.position.y < -hoverAmplitude) {
-      //   hoverDirection *= -1;
-      // }
-
-    }
-
+    droneModel.rotation.x = orientation_x;
+    droneModel.rotation.y = orientation_y;
+    droneModel.rotation.z = orientation_z;
   }
 
-  const size = 20;
-  const divisions = 20;
-
-  const gridHelper = new THREE.GridHelper(size, divisions);
-  scene.add(gridHelper);
-
-  control.update()
-  // if (droneModel) {
-  //   // Example: Rotate around the Y-axis
-
-
-  //   // Example: Simulate up-down hovering effect along the Y-axis using sine function
-  //   droneModel.position.y += hoverDirection * hoverAmplitude * Math.sin(performance.now() * hoverSpeed / 10000);
-
-  //   // Change hover direction when reaching the amplitude limits
-  //   if (droneModel.position.y > hoverAmplitude || droneModel.position.y < -hoverAmplitude) {
-  //     hoverDirection *= -1;
-  //   }
-  // }
-  // Render the scene
-  renderer.render(scene, camera);
-
-  // cube.rotation.x += 0.01;
-  // cube.rotation.y += 0.01;
-
-  // cube.translateX(+0.002)
-  // line.rotateX(+0.02)
-
-
-
-  renderer.render(scene, camera);
-  // if (droneModel) {
-  //   droneModel.position.y += 0.01 * droneModel.position.y
-  // }
+  render();
 }
 
 animate();
 
+function render(){
+  renderer.render(scene, camera)
+
+}
 
 
-///chart here
+import axios from 'axios';
+
+async function fetchDataFromAPI(url) {
+  try {
+    // Set up axios instance with CORS headers
+    const axiosInstance = axios.create({
+      headers: {
+        'Access-Control-Allow-Origin': '*', // Allow requests from any origin
+        'Content-Type': 'application/json' // Set content type as JSON
+      }
+    });
+
+    // Make the request using the axios instance
+    const response = await axiosInstance.get(url);
+    const data = response.data;
+
+    // Return the data
+    console.log(data.data);
+    return data;
+  } catch (error) {
+    // Handle any errors that occur during the fetch operation
+    console.error('Error fetching data:', error.message);
+    throw error; // Rethrow the error to handle it elsewhere if needed
+  }
+}
+
+const socket = new WebSocket('ws://localhost:8765');
+
+// Handle messages received from the server
+socket.onmessage = function (event) {
+  const data = JSON.parse(event.data);
+  // Do something with the received data, such as updating your 3D model orientation
+  console.log('Received orientation data:', data.orientation_rpy);
+  const new_orientation_y = data.orientation_rpy[0];
+  const new_orientation_z = data.orientation_rpy[1];
+  const new_orientation_x = data.orientation_rpy[2];
+
+  target_orientation_x = new_orientation_x;
+  target_orientation_y = new_orientation_y;
+  target_orientation_z = new_orientation_z;
+};
+
+// Handle errors
+socket.onerror = function (error) {
+  console.error('WebSocket error:', error);
+};
+
+// Handle closure of the WebSocket connection
+socket.onclose = function (event) {
+  console.log('WebSocket connection closed:', event);
+};
