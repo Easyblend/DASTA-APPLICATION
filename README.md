@@ -1,5 +1,11 @@
 # PROJECT DASTA
 
+![Front end model view 1](image.png)
+![alt text](image-1.png)
+![alt text](image-4.png)
+![alt text](image-2.png)
+![Graph of drone data](image-3.png)<video controls src="20240707-0146-52.6402616.mp4" title="Title"></video>
+
 ![image](https://github.com/Easyblend/DASTA-APPLICATION/assets/95724695/cc5e95e5-6e25-4e27-a096-d36694705fa1)
 
 ![image](https://github.com/Easyblend/DASTA-APPLICATION/assets/95724695/b072cac2-5ee9-44f2-af77-c1bbdc3af5fa)
